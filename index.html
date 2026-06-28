@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fernando Pabón · Product Manager</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'VT323',monospace;background:#1C1B3A;min-height:100vh;color:#FFFFFF}
+
+/* ── UNIVERSAL OVERRIDE: nothing black ── */
+body *{color:inherit}
+
+/* ── BUTTON SYSTEM ──
+   .btn          = yellow border + yellow text on transparent bg
+   .btn.solid    = yellow bg + dark text
+   Both always visible regardless of browser resets */
+.btn{
+  font-family:'Press Start 2P',monospace !important;
+  font-size:8px !important;
+  padding:.7rem 1.25rem;
+  cursor:pointer;
+  display:inline-block;
+  letter-spacing:.03em;
+  line-height:1.5;
+  transition:all .15s;
+  -webkit-appearance:none;
+  appearance:none;
+  text-decoration:none;
+  border:2px solid #FFD93D !important;
+  background:transparent !important;
+  color:#FFD93D !important;
+}
+.btn:hover{
+  background:#FFD93D !important;
+  color:#0D0C22 !important;
+  transform:translate(-2px,-2px);
+}
+.btn.solid{
+  background:#FFD93D !important;
+  color:#0D0C22 !important;
+  border-color:#FFD93D !important;
+}
+.btn.solid:hover{
+  background:#4FFFB0 !important;
+  border-color:#4FFFB0 !important;
+  color:#0D0C22 !important;
+}
+
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:.7rem 1.5rem;background:#0D0C22;border-bottom:3px solid #4FFFB0;position:sticky;top:0;z-index:99;flex-wrap:wrap;gap:.5rem}
+.nav-logo{font-family:'Press Start 2P',monospace;font-size:9px;color:#4FFFB0 !important;white-space:nowrap;line-height:1.8}
+.nav-logo small{display:block;font-size:6px;color:#BEB9FF !important}
+.nav-links{display:flex;gap:4px;list-style:none;flex-wrap:wrap}
+.nl{
+  font-family:'Press Start 2P',monospace !important;
+  font-size:7px !important;
+  color:#FFD93D !important;
+  padding:.4rem .6rem;
+  border:2px solid #6B66FF !important;
+  background:#1C1B3A !important;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all .15s;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.nl:hover{background:#6B66FF !important;color:#FFFFFF !important;border-color:#4FFFB0 !important}
+.nl.active{background:#4FFFB0 !important;color:#0D0C22 !important;border-color:#4FFFB0 !important}
+.nav-cta{
+  font-family:'Press Start 2P',monospace !important;
+  font-size:7px !important;
+  padding:.45rem .85rem;
+  background:#FFD93D !important;
+  color:#0D0C22 !important;
+  border:2px solid #FFD93D !important;
+  cursor:pointer;font-weight:700;
+  white-space:nowrap;transition:all .15s;
+  -webkit-appearance:none;appearance:none;
+}
+.nav-cta:hover{background:#4FFFB0 !important;border-color:#4FFFB0 !important}
+
+.blink{animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.page{display:none}.page.active{display:block}
+
+/* SHARED LAYOUT */
+.wrap{max-width:960px;margin:0 auto;padding:3rem 2rem}
+.sec-tag{font-family:'Press Start 2P',monospace;font-size:8px;color:#4FFFB0 !important;letter-spacing:.1em;margin-bottom:.5rem}
+.sec-h2{font-family:'Press Start 2P',monospace;font-size:clamp(11px,1.4vw,16px);line-height:2.1;color:#FFFFFF !important;margin-bottom:1.5rem}
+.sec-h2 em{color:#4FFFB0 !important;font-style:normal}
+.body-text{font-size:18px;color:#BEB9FF !important;line-height:1.7;margin-bottom:.85rem;max-width:640px}
+.divider{border:none;border-top:1px solid rgba(107,102,255,.35);margin:2.5rem 0}
+.ptag{font-family:'Press Start 2P',monospace;font-size:6px;padding:3px 7px;border:1px solid #6B66FF;color:#BEB9FF !important;display:inline-block}
+
+/* HOME HERO — compact two-column */
+.hero{background:#0D0C22;padding:2.5rem 2rem}
+.hero-inner{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:2.5rem;align-items:center}
+.hero-pre{font-family:'Press Start 2P',monospace;font-size:8px;color:#4FFFB0 !important;letter-spacing:.1em;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+.hero-pre::before{content:'▶';color:#FFD93D !important;animation:blink 1.2s step-end infinite}
+.hero-h1{font-family:'Press Start 2P',monospace;font-size:clamp(13px,1.7vw,18px);line-height:2.1;color:#FFFFFF !important;margin-bottom:1rem}
+.hero-sub{font-size:19px;color:#BEB9FF !important;line-height:1.6;margin-bottom:1.5rem;max-width:480px}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center}
+.av-col{display:flex;flex-direction:column;align-items:center;gap:.5rem;text-align:center}
+.px-av{display:inline-block;line-height:0;border:2px solid #6B66FF;background:#111128;image-rendering:pixelated;flex-shrink:0}
+.px-row{display:flex;line-height:0}
+.av-name{font-family:'Press Start 2P',monospace;font-size:7px;color:#FFFFFF !important;line-height:1.9}
+.av-title{font-size:15px;color:#4FFFB0 !important}
+.ai-badge{font-family:'Press Start 2P',monospace;font-size:6px;padding:.3rem .55rem;border:2px solid #4FFFB0;color:#4FFFB0 !important;background:rgba(79,255,176,.08);display:inline-block}
+.avail{display:inline-flex;align-items:center;gap:5px;font-family:'Press Start 2P',monospace;font-size:6px;color:#4FFFB0 !important;border:1px solid #4FFFB0;padding:.25rem .5rem}
+.avail-dot{width:6px;height:6px;background:#4FFFB0;animation:blink .8s step-end infinite;display:inline-block;flex-shrink:0}
+
+/* STATS BAR */
+.stats-bar{background:#111128;border-top:2px solid #6B66FF;border-bottom:2px solid #6B66FF;padding:1.1rem 2rem;display:flex;overflow-x:auto;gap:0}
+.stat{display:flex;flex-direction:column;gap:3px;padding:0 1.75rem;border-right:1px solid rgba(107,102,255,.4);min-width:120px;flex-shrink:0}
+.stat:first-child{padding-left:0}.stat:last-child{border-right:none}
+.stat-val{font-family:'Press Start 2P',monospace;font-size:14px;color:#4FFFB0 !important}
+.stat-lbl{font-size:14px;color:#BEB9FF !important}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem}
+.card{background:#0D0C22;border:2px solid #6B66FF;padding:1.15rem;transition:all .15s;position:relative}
+.card::after{content:'';position:absolute;bottom:-5px;right:-5px;width:7px;height:7px;background:#6B66FF}
+.card:hover{border-color:#4FFFB0;transform:translate(-2px,-2px)}.card:hover::after{background:#4FFFB0}
+.card-id{font-family:'Press Start 2P',monospace;font-size:7px;color:#BEB9FF !important;margin-bottom:.3rem}
+.card-title{font-family:'Press Start 2P',monospace;font-size:8px;color:#4FFFB0 !important;margin-bottom:.45rem;line-height:1.8}
+.card-body{font-size:15px;color:#BEB9FF !important;line-height:1.6;margin-bottom:.5rem}
+.card-tag{display:inline-block;font-family:'Press Start 2P',monospace;font-size:6px;padding:2px 6px;background:rgba(107,102,255,.2);border:1px solid #6B66FF;color:#BEB9FF !important}
+
+/* PLG LOOP */
+.loop-section{background:#0D0C22;border-top:1px solid rgba(107,102,255,.3);border-bottom:1px solid rgba(107,102,255,.3)}
+.loop-inner{max-width:960px;margin:0 auto;padding:2.5rem 2rem;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.loop-diagram{position:relative;width:260px;height:260px;flex-shrink:0;margin:0 auto}
+.loop-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#111128;border:2px solid #6B66FF;padding:.4rem .55rem;text-align:center;z-index:5;white-space:nowrap}
+.lc-g{font-family:'Press Start 2P',monospace;font-size:7px;color:#6B66FF !important;line-height:1.9;display:block}
+.lc-a{font-family:'Press Start 2P',monospace;font-size:7px;color:#4FFFB0 !important;line-height:1.9;display:block}
+.ln{position:absolute;background:#1C1B3A;border:2px solid;padding:.28rem .4rem;text-align:center;z-index:4;width:65px}
+.ln-lbl{font-family:'Press Start 2P',monospace;font-size:5px;line-height:1.9;display:block}
+.ln-sub{font-size:10px;color:#BEB9FF !important;display:block}
+.ln1{top:4px;left:50%;transform:translateX(-50%);border-color:#6B66FF}.ln1 .ln-lbl{color:#6B66FF !important}
+.ln2{top:62px;right:0;border-color:#4FFFB0}.ln2 .ln-lbl{color:#4FFFB0 !important}
+.ln3{bottom:44px;right:8px;border-color:#FFD93D}.ln3 .ln-lbl{color:#FFD93D !important}
+.ln4{bottom:44px;left:8px;border-color:#FF6B6B}.ln4 .ln-lbl{color:#FF6B6B !important}
+.ln5{top:62px;left:0;border-color:#C084FC}.ln5 .ln-lbl{color:#C084FC !important}
+.orbit{position:absolute;top:50%;left:50%;width:0;height:0;pointer-events:none}
+.dot{width:9px;height:9px;background:#FFFFFF;border:2px solid #4FFFB0;position:absolute;transform:translate(-4px,-4px);animation:orbit-anim 4s linear infinite}
+@keyframes orbit-anim{0%{transform:translate(-4px,-96px)}20%{transform:translate(88px,-27px)}40%{transform:translate(54px,80px)}60%{transform:translate(-63px,80px)}80%{transform:translate(-93px,-27px)}100%{transform:translate(-4px,-96px)}}
+.arr{position:absolute;animation:parr 1.5s ease-in-out infinite;font-size:14px}
+@keyframes parr{0%,100%{opacity:.3}50%{opacity:1}}
+.a1{color:#4FFFB0 !important;top:34px;right:42px;animation-delay:0s}
+.a2{color:#FFD93D !important;top:126px;right:2px;animation-delay:.3s}
+.a3{color:#FF6B6B !important;bottom:88px;right:24px;animation-delay:.6s}
+.a4{color:#C084FC !important;bottom:88px;left:24px;animation-delay:.9s}
+.a5{color:#6B66FF !important;top:126px;left:2px;animation-delay:1.2s}
+.loop-steps{display:flex;flex-direction:column;gap:.6rem}
+.lstep{display:flex;gap:.75rem;align-items:flex-start}
+.ls-num{font-family:'Press Start 2P',monospace;font-size:7px;color:#BEB9FF !important;flex-shrink:0;padding-top:3px}
+.ls-name{font-family:'Press Start 2P',monospace;font-size:7px;color:#4FFFB0 !important;margin-bottom:2px;line-height:1.7}
+.ls-desc{font-size:14px;color:#BEB9FF !important;line-height:1.5}
+
+/* WORK CARDS */
+.work-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.wc{background:#0D0C22;border:2px solid #6B66FF;padding:1.15rem;transition:all .15s;position:relative}
+.wc::after{content:'';position:absolute;bottom:-5px;right:-5px;width:7px;height:7px;background:#6B66FF}
+.wc:hover{border-color:#4FFFB0;transform:translate(-2px,-2px)}.wc:hover::after{background:#4FFFB0}
+.wc-id{font-family:'Press Start 2P',monospace;font-size:7px;color:#BEB9FF !important;margin-bottom:.3rem}
+.wc-title{font-family:'Press Start 2P',monospace;font-size:8px;color:#4FFFB0 !important;margin-bottom:.45rem;line-height:1.8}
+.wc-body{font-size:15px;color:#BEB9FF !important;line-height:1.6;margin-bottom:.5rem}
+.wc-metric{font-family:'Press Start 2P',monospace;font-size:7px;color:#FFD93D !important;margin-bottom:.4rem}
+.wc-tag{display:inline-block;font-family:'Press Start 2P',monospace;font-size:6px;padding:2px 6px;background:rgba(107,102,255,.2);border:1px solid #6B66FF;color:#BEB9FF !important}
+
+/* TIMELINE */
+.tl{display:flex;flex-direction:column}
+.tl-item{display:grid;grid-template-columns:110px 1fr;gap:1.25rem;padding:1.1rem 0;border-top:1px solid rgba(107,102,255,.35)}
+.tl-item:last-child{border-bottom:1px solid rgba(107,102,255,.35)}
+.tl-year{font-family:'Press Start 2P',monospace;font-size:7px;color:#BEB9FF !important;padding-top:2px;line-height:1.9}
+.tl-year small{display:block;color:#4FFFB0 !important;font-size:6px;margin-top:3px}
+.tl-role{font-family:'Press Start 2P',monospace;font-size:7px;color:#4FFFB0 !important;margin-bottom:3px;line-height:1.8}
+.tl-co{font-size:15px;color:#FFD93D !important;margin-bottom:.3rem}
+.tl-desc{font-size:15px;color:#BEB9FF !important;line-height:1.6}
+
+/* SKILLS */
+.sr{display:flex;align-items:center;gap:.75rem;margin-bottom:.6rem}
+.sr-name{font-family:'Press Start 2P',monospace;font-size:7px;color:#FFD93D !important;width:130px;text-align:right;flex-shrink:0}
+.sr-bar{flex:1;height:10px;background:#111128;border:2px solid #6B66FF}
+.sr-fill{height:100%;width:0%;transition:width 1.2s ease}
+.sr-pct{font-family:'Press Start 2P',monospace;font-size:7px;color:#4FFFB0 !important;width:30px}
+
+/* BLOG — expandable accordion */
+.blog-list{display:flex;flex-direction:column;gap:1rem}
+.bc{background:#0D0C22;border:2px solid #6B66FF;transition:border-color .15s}
+.bc.open{border-color:#4FFFB0}
+.bc-head{padding:1.1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;user-select:none}
+.bc-head:hover .bc-title{color:#FFFFFF !important}
+.bc-cat{font-family:'Press Start 2P',monospace;font-size:7px;color:#BEB9FF !important;margin-bottom:.4rem}
+.bc-title{font-family:'Press Start 2P',monospace;font-size:8px;color:#4FFFB0 !important;line-height:1.8;transition:color .15s}
+.bc-icon{font-family:'Press Start 2P',monospace;font-size:12px;color:#FFD93D !important;flex-shrink:0;padding-top:2px;transition:transform .2s;line-height:1}
+.bc.open .bc-icon{transform:rotate(180deg)}
+.bc-content{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid rgba(107,102,255,.3);margin-top:0}
+.bc-content p{font-size:16px;color:#BEB9FF !important;line-height:1.7;margin-top:.85rem}
+.bc-content h4{font-family:'Press Start 2P',monospace;font-size:7px;color:#FFD93D !important;margin:1rem 0 .4rem;line-height:1.8}
+.bc-content ul{padding-left:1.2rem;margin-top:.4rem;display:flex;flex-direction:column;gap:.3rem}
+.bc-content ul li{font-size:15px;color:#BEB9FF !important;line-height:1.6}
+.bc-content blockquote{border-left:3px solid #4FFFB0;padding:.4rem .75rem;margin:.75rem 0;font-size:15px;color:#BEB9FF !important;font-style:italic}
+.bc-tag{display:inline-block;font-family:'Press Start 2P',monospace;font-size:6px;padding:2px 6px;margin-top:.75rem;background:rgba(107,102,255,.2);border:1px solid #6B66FF;color:#BEB9FF !important}
+
+/* CONTACT */
+.cl{background:#0D0C22;border:2px solid #6B66FF;padding:.85rem 1rem;display:flex;align-items:center;gap:.65rem;transition:all .12s;text-decoration:none;color:#FFFFFF !important}
+.cl:hover{border-color:#4FFFB0;transform:translate(-2px,-2px)}
+.cl-icon{font-size:19px}
+.cl-lbl{font-family:'Press Start 2P',monospace;font-size:7px;color:#BEB9FF !important;display:block;margin-bottom:2px}
+.cl-val{font-size:15px;color:#FFFFFF !important}
+.cfi{background:#0D0C22;border:2px solid #6B66FF;padding:.6rem .85rem;color:#FFFFFF !important;font-family:'VT323',monospace;font-size:18px;outline:none;width:100%;transition:border-color .15s}
+.cfi:focus{border-color:#4FFFB0}
+.cfi::placeholder{color:#6B66FF !important}
+select.cfi option{background:#1C1B3A;color:#FFFFFF !important}
+textarea.cfi{min-height:100px;resize:vertical}
+.fl{display:flex;flex-direction:column;gap:4px}
+.fl label{font-family:'Press Start 2P',monospace;font-size:7px;color:#BEB9FF !important}
+
+@media(max-width:700px){
+  .hero-inner,.loop-inner{grid-template-columns:1fr}
+  .av-col{display:none}
+  .tl-item{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+</style>
+
+<nav class="nav">
+  <div class="nav-logo">FP · PM<small>PRODUCT MANAGER ▶<span class="blink">_</span></small></div>
+  <ul class="nav-links">
+    <li><button class="nl active" id="n-home" onclick="go('home')">HOME</button></li>
+    <li><button class="nl" id="n-about" onclick="go('about')">ABOUT ME</button></li>
+    <li><button class="nl" id="n-work" onclick="go('work')">MY WORK</button></li>
+    <li><button class="nl" id="n-plg" onclick="go('plg')">WHAT IS PLG</button></li>
+    <li><button class="nl" id="n-blog" onclick="go('blog')">BLOG</button></li>
+    <li><button class="nl" id="n-contact" onclick="go('contact')">CONTACT</button></li>
+  </ul>
+  <button class="nav-cta" onclick="go('contact')">LET'S TALK ▶</button>
+</nav>
+
+<!-- ══════════ HOME ══════════ -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-pre">SENIOR PM · PLG · AI-NATIVE WORKFLOW</div>
+        <h1 class="hero-h1">
+          I build products<br>
+          <span style="color:#4FFFB0">that grow</span><br>
+          <span style="color:#FFD93D">themselves.</span>
+        </h1>
+        <p class="hero-sub">10+ years shipping digital products across fintech, telecom, retail and education — using product strategy, PLG and AI to build teams and systems that scale.</p>
+        <div class="hero-btns">
+          <button class="btn solid" onclick="go('about')">MEET ME ▶</button>
+          <button class="btn" onclick="go('contact')">WORK WITH ME</button>
+        </div>
+      </div>
+      <div class="av-col">
+        <div id="px-av" class="px-av"></div>
+        <p class="av-name">LUIS FERNANDO<br>PABÓN</p>
+        <p class="av-title">Senior PM</p>
+        <div class="ai-badge">◈ CLAUDE-NATIVE PM</div>
+        <div class="avail"><span class="avail-dot"></span>AVAILABLE NOW</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-val">10+</span><span class="stat-lbl">years in product</span></div>
+    <div class="stat"><span class="stat-val">3×</span><span class="stat-lbl">user growth (Experian)</span></div>
+    <div class="stat"><span class="stat-val">4</span><span class="stat-lbl">industries</span></div>
+    <div class="stat"><span class="stat-val">1K+</span><span class="stat-lbl">people trained in agile</span></div>
+    <div class="stat"><span class="stat-val">900+</span><span class="stat-lbl">wireframes (Elektra MVP)</span></div>
+  </div>
+
+  <div class="wrap">
+    <p class="sec-tag">WHAT I DO</p>
+    <h2 class="sec-h2">Product Management · Strategy · <em>Delivery</em></h2>
+    <div class="card-grid">
+      <div class="card">
+        <p class="card-id">[01]</p>
+        <p class="card-title">PRODUCT STRATEGY</p>
+        <p class="card-body">I define vision, goals and roadmaps aligned to business outcomes. I translate stakeholder needs into clear product direction — across B2B and B2C, from fintech to enterprise SaaS.</p>
+        <span class="card-tag">STRATEGY · ROADMAP</span>
+      </div>
+      <div class="card">
+        <p class="card-id">[02]</p>
+        <p class="card-title">BACKLOG & PRIORITIZATION</p>
+        <p class="card-body">I cut through noise to prioritize what actually moves the needle. I use frameworks like RICE, MoSCoW, and impact mapping to keep teams focused on what matters — and say no to what doesn't.</p>
+        <span class="card-tag">BACKLOG · PRIORITIZATION</span>
+      </div>
+      <div class="card">
+        <p class="card-id">[03]</p>
+        <p class="card-title">DISCOVERY & RESEARCH</p>
+        <p class="card-body">User interviews, market research, UX testing — I surface the insights that drive real product decisions. I've led discovery across fintech, telco, retail, education and enterprise SaaS.</p>
+        <span class="card-tag">RESEARCH · UX · DISCOVERY</span>
+      </div>
+      <div class="card">
+        <p class="card-id">[04]</p>
+        <p class="card-title">AGILE DELIVERY</p>
+        <p class="card-body">End-to-end delivery across cross-functional teams. Sprint planning, backlog grooming, stakeholder alignment, and shipping. I've trained 1,000+ employees in Agile methodology.</p>
+        <span class="card-tag">AGILE · SCRUM · DELIVERY</span>
+      </div>
+      <div class="card">
+        <p class="card-id">[05]</p>
+        <p class="card-title">STAKEHOLDER MANAGEMENT</p>
+        <p class="card-body">I align business, design, and engineering around shared goals. From C-suite to developers — I manage expectations, navigate competing priorities, and keep teams moving forward.</p>
+        <span class="card-tag">STAKEHOLDERS · ALIGNMENT</span>
+      </div>
+      <div class="card">
+        <p class="card-id">[06]</p>
+        <p class="card-title">PLG & AI-NATIVE PRODUCT</p>
+        <p class="card-body">Growth loops where the product sells itself. I also use Claude daily as a collaborator — research synthesis, hypothesis generation, and building AI-powered product experiences.</p>
+        <span class="card-tag">PLG · AI · CLAUDE</span>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+      <button class="btn solid" onclick="go('work')">SEE MY WORK ▶</button>
+    </div>
+  </div>
+
+  <div class="loop-section">
+    <div class="loop-inner">
+      <div>
+        <p class="sec-tag">PLG FRAMEWORK</p>
+        <h2 class="sec-h2" style="margin-bottom:1rem">One engine I apply<br>to <em>every product</em></h2>
+        <div class="loop-steps">
+          <div class="lstep"><span class="ls-num">01</span><div><p class="ls-name">ACQUIRE</p><p class="ls-desc">Freemium, free trials, shareable outputs — users find the product through the product.</p></div></div>
+          <div class="lstep"><span class="ls-num">02</span><div><p class="ls-name">ACTIVATE</p><p class="ls-desc">AHA moment in minutes. Onboarding drives real value fast — not after a week of training.</p></div></div>
+          <div class="lstep"><span class="ls-num">03</span><div><p class="ls-name">RETAIN</p><p class="ls-desc">The product builds habit. Users return because they need to.</p></div></div>
+          <div class="lstep"><span class="ls-num">04</span><div><p class="ls-name">REVENUE</p><p class="ls-desc">Feature gating, not sales pressure. Conversion when users already feel the value.</p></div></div>
+          <div class="lstep"><span class="ls-num">05</span><div><p class="ls-name">REFER</p><p class="ls-desc">The product is better shared. Users bring more users. The loop closes itself.</p></div></div>
+        </div>
+        <div style="margin-top:1.5rem">
+          <button class="btn" onclick="go('plg')">LEARN MORE ABOUT PLG ▶</button>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:.75rem">
+        <div class="loop-diagram">
+          <span class="arr a1">▶</span><span class="arr a2">▼</span><span class="arr a3">◀</span><span class="arr a4">◀</span><span class="arr a5">▲</span>
+          <div class="ln ln1"><span class="ln-lbl">ACQUIRE</span><span class="ln-sub">freemium</span></div>
+          <div class="ln ln2"><span class="ln-lbl">ACTIVATE</span><span class="ln-sub">AHA</span></div>
+          <div class="ln ln3"><span class="ln-lbl">RETAIN</span><span class="ln-sub">habit</span></div>
+          <div class="ln ln4"><span class="ln-lbl">REVENUE</span><span class="ln-sub">upgrade</span></div>
+          <div class="ln ln5"><span class="ln-lbl">REFER</span><span class="ln-sub">viral</span></div>
+          <div class="loop-center"><span class="lc-g">GROWTH</span><span class="lc-a">LOOP</span></div>
+          <div class="orbit"><div class="dot"></div></div>
+        </div>
+        <p style="font-family:'Press Start 2P',monospace;font-size:6px;color:#BEB9FF !important;letter-spacing:.08em">SELF-FUELING ENGINE</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ ABOUT ══════════ -->
+<div id="page-about" class="page">
+  <div class="wrap">
+    <p class="sec-tag">THE BUILDER</p>
+    <h2 class="sec-h2">I build products and<br>teams that <em>deliver</em></h2>
+    <p class="body-text">Senior PM with 10+ years building digital products across fintech, telecom, retail, and education. I work at the intersection of business, design, and technology — combining product strategy, user research, analytics, and Agile execution to deliver scalable, customer-focused solutions.</p>
+    <p class="body-text">I use <span style="color:#4FFFB0">Claude</span> as an active collaborator — not a shortcut. From discovery to experiment design to rapid prototyping, AI is part of how I ship faster and smarter.</p>
+    <p class="body-text">International experience across North America and Latin America. Based in Bogotá, available globally remote.</p>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem">
+      <span class="ptag">Bogotá / Remote</span>
+      <span class="ptag">North America · LATAM</span>
+      <span class="ptag">English · Spanish · French</span>
+    </div>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2.5rem">
+      <button class="btn solid" onclick="go('contact')">WORK WITH ME ▶</button>
+      <a href="https://www.linkedin.com/in/fernandopabon" target="_blank"><button class="btn">LINKEDIN</button></a>
+    </div>
+    <hr class="divider">
+    <p class="sec-tag">SKILL TREE</p>
+    <h2 class="sec-h2" style="margin-bottom:1.25rem">What I <em>actually know</em></h2>
+    <div class="sr"><span class="sr-name">Product Strategy</span><div class="sr-bar"><div class="sr-fill" style="background:#4FFFB0" data-w="95%"></div></div><span class="sr-pct">95</span></div>
+    <div class="sr"><span class="sr-name">Agile / Scrum</span><div class="sr-bar"><div class="sr-fill" style="background:#4FFFB0" data-w="95%"></div></div><span class="sr-pct">95</span></div>
+    <div class="sr"><span class="sr-name">Prioritization</span><div class="sr-bar"><div class="sr-fill" style="background:#4FFFB0" data-w="93%"></div></div><span class="sr-pct">93</span></div>
+    <div class="sr"><span class="sr-name">Stakeholder Mgmt</span><div class="sr-bar"><div class="sr-fill" style="background:#6B66FF" data-w="92%"></div></div><span class="sr-pct">92</span></div>
+    <div class="sr"><span class="sr-name">PLG Strategy</span><div class="sr-bar"><div class="sr-fill" style="background:#6B66FF" data-w="90%"></div></div><span class="sr-pct">90</span></div>
+    <div class="sr"><span class="sr-name">Claude / AI Tools</span><div class="sr-bar"><div class="sr-fill" style="background:#6B66FF" data-w="90%"></div></div><span class="sr-pct">90</span></div>
+    <div class="sr"><span class="sr-name">User Research</span><div class="sr-bar"><div class="sr-fill" style="background:#C084FC" data-w="88%"></div></div><span class="sr-pct">88</span></div>
+    <div class="sr"><span class="sr-name">Product Analytics</span><div class="sr-bar"><div class="sr-fill" style="background:#C084FC" data-w="86%"></div></div><span class="sr-pct">86</span></div>
+    <div class="sr"><span class="sr-name">Viral Loop Design</span><div class="sr-bar"><div class="sr-fill" style="background:#FFD93D" data-w="82%"></div></div><span class="sr-pct">82</span></div>
+    <hr class="divider">
+    <p class="sec-tag">EXPERIENCE</p>
+    <h2 class="sec-h2" style="margin-bottom:1rem">Where I've <em>shipped</em></h2>
+    <div class="tl">
+      <div class="tl-item">
+        <div class="tl-year">2025–NOW<small>Remote · Oregon US</small></div>
+        <div><p class="tl-role">PRODUCT DELIVERY MANAGER</p><p class="tl-co">Visp — ISP SaaS</p><p class="tl-desc">Led cross-functional teams delivering SaaS for the ISP industry. Full lifecycle: discovery → requirements → design → dev → testing → early-life support.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2020–2024<small>Spain · Colombia</small></div>
+        <div><p class="tl-role">PM & PRODUCT OWNER</p><p class="tl-co">The Cocktail / WPP</p><p class="tl-desc">PM across fintech, telco, retail and education. Projects: Cafam (SaaS multi-model), ETB (ISP commercial web), Elektra (mobile app MVP), AB InBev (BI adoption), Ecopetrol (Agile coaching 1,000+ employees).</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2019–2020<small>Canada</small></div>
+        <div><p class="tl-role">CO-FOUNDER & PM</p><p class="tl-co">PixelFabric — AR Startup</p><p class="tl-desc">Award-winning AR app for custom T-shirt design. Built from zero to launch at UBC's Centre for Digital Media.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2016–2018<small>Colombia</small></div>
+        <div><p class="tl-role">UX RESEARCHER</p><p class="tl-co">Banco de Bogotá</p><p class="tl-desc">Pioneered digital transformation through user testing and market research for fintech projects. Proxy Manager between internal clients and external providers.</p></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2015–2016<small>Colombia</small></div>
+        <div><p class="tl-role">ASSOCIATE PM</p><p class="tl-co">Experian — Midatacrédito</p><p class="tl-desc">Grew monthly subscribers from 50K to 150K via freemium mechanics and B2B partnerships. PLG before it had a name.</p></div>
+      </div>
+    </div>
+    <div style="margin-top:2rem;padding:1rem 1.25rem;background:#0D0C22;border:1px solid rgba(107,102,255,.4)">
+      <p style="font-family:'Press Start 2P',monospace;font-size:7px;color:#BEB9FF !important;margin-bottom:.5rem">EDUCATION</p>
+      <p style="font-size:15px;color:#D0CCFF !important;line-height:1.8">Master of Digital Media — UBC / Centre for Digital Media · Canada 2018–2020<br>B. Business Management, Minor Psychology — Universidad de los Andes · Colombia 2010–2016<br>Exchange Business/Marketing — Aston University · UK 2014</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WORK ══════════ -->
+<div id="page-work" class="page">
+  <div class="wrap">
+    <p class="sec-tag">SELECTED WORK</p>
+    <h2 class="sec-h2">Projects I've<br><em>actually shipped</em></h2>
+    <div class="work-grid">
+      <div class="wc"><p class="wc-id">CASE 01 · Experian · 2015–16</p><p class="wc-title">3× USER GROWTH — MIDATACRÉDITO</p><p class="wc-body">Grew Colombia's only Personal Finance Manager from 50K to 150K monthly subscribers. Built freemium mechanics, B2B partnerships, and lead gen targeting users with no credit score. PLG before it had a name.</p><p class="wc-metric">50K → 150K users/month</p><span class="wc-tag">FINTECH · PLG · B2B</span></div>
+      <div class="wc"><p class="wc-id">CASE 02 · The Cocktail · ETB</p><p class="wc-title">END-TO-END ISP COMMERCIAL WEB</p><p class="wc-body">Led agile squads redesigning ETB's commercial web flows. Solved misalignment between business goals and technical execution through user-centered flows tied to KPIs. Tools: Jira, Confluence, Figma, Google Analytics, Miro, Scrum.</p><p class="wc-metric">Conversion funnel end-to-end redesign</p><span class="wc-tag">TELCO · CRO · AGILE</span></div>
+      <div class="wc"><p class="wc-id">CASE 03 · The Cocktail · Elektra</p><p class="wc-title">MOBILE APP MVP IN 3 MONTHS</p><p class="wc-body">PM for Elektra's full mobile app redesign for iOS and Android: 20+ sections, 900+ wireframes, 500+ interface screens. Onboarding, product catalog, PDP, account management and checkout — delivered in 7 sprints.</p><p class="wc-metric">900+ wireframes · 500+ screens · 7 sprints</p><span class="wc-tag">RETAIL · MOBILE · MVP</span></div>
+      <div class="wc"><p class="wc-id">CASE 04 · The Cocktail · Cafam</p><p class="wc-title">SAAS MULTI-MODEL PLATFORM</p><p class="wc-body">PO for Cafam's full digital ecosystem reimagination — integrating healthcare, tourism, education and entertainment into one scalable SaaS platform. Deep design-backend coordination across squads. Tools: JIRA, Contentful, Figma, Slack, Zeplin.</p><p class="wc-metric">4 business models · 1 platform</p><span class="wc-tag">SAAS · UX · MULTI-STAKEHOLDER</span></div>
+      <div class="wc"><p class="wc-id">CASE 05 · Ecopetrol + AB InBev</p><p class="wc-title">BI ADOPTION + AGILE AT SCALE</p><p class="wc-body">Change management for BI tool adoption at AB InBev. Agile coaching for 1,000+ Ecopetrol employees — applied PLG thinking to internal tools: value from first use, not after weeks of training.</p><p class="wc-metric">+1,000 people trained</p><span class="wc-tag">ENTERPRISE · AGILE · CHANGE MGMT</span></div>
+      <div class="wc"><p class="wc-id">CASE 06 · PixelFabric · 2019–20</p><p class="wc-title">AWARD-WINNING AR STARTUP</p><p class="wc-body">Co-founded PixelFabric — an AR app that brings T-shirt designs to life using augmented reality. Built from zero, won awards at UBC's Centre for Digital Media. Tools: Unity, Photoshop, Illustrator, Google Drive, Trello.</p><p class="wc-metric">Award-winning · Canada</p><span class="wc-tag">STARTUP · AR · 0→1</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ WHAT IS PLG ══════════ -->
+<div id="page-plg" class="page">
+  <div class="wrap">
+    <p class="sec-tag">THE FRAMEWORK</p>
+    <h2 class="sec-h2">Product-Led Growth:<br><em>the product sells itself</em></h2>
+    <p class="body-text">PLG is a go-to-market strategy where the product is the primary driver of acquisition, activation, retention, and expansion. Slack, Figma, Notion and Dropbox all got here without a traditional sales team — the product did the selling.</p>
+    <div class="card-grid" style="margin-bottom:2.5rem">
+      <div class="card"><p class="card-id">[PLG-01]</p><p class="card-title">NORTH STAR METRIC</p><p class="card-body">One metric that captures the value delivered to users. Everything aligns to it. Slack: messages sent. Zoom: meeting minutes. This is the number I help teams find first.</p><span class="card-tag">STRATEGY</span></div>
+      <div class="card"><p class="card-id">[PLG-02]</p><p class="card-title">ACTIVATION MAPPING</p><p class="card-body">Find the exact actions in the first 48h that predict 30-day retention. Then build onboarding around those moments — cohort analysis, not gut feeling.</p><span class="card-tag">ANALYTICS</span></div>
+      <div class="card"><p class="card-id">[PLG-03]</p><p class="card-title">FREEMIUM ARCHITECTURE</p><p class="card-body">What to gate and what to give free is a design decision. The free tier must deliver real value while creating natural urgency to upgrade — not artificial pressure.</p><span class="card-tag">MONETIZATION</span></div>
+      <div class="card"><p class="card-id">[PLG-04]</p><p class="card-title">VIRAL LOOP DESIGN</p><p class="card-body">Figma is free to collaborate — that's a viral loop baked into the core. Design the product to be better when shared. The incentive is functionality, not cash.</p><span class="card-tag">GROWTH</span></div>
+      <div class="card"><p class="card-id">[PLG-05]</p><p class="card-title">PQL SCORING</p><p class="card-body">Know when a free user is ready to buy based on behavior inside the product — not whether they opened your email. Product Qualified Leads convert 3× better than MQLs.</p><span class="card-tag">CONVERSION</span></div>
+      <div class="card"><p class="card-id">[PLG-06]</p><p class="card-title">AI-POWERED ONBOARDING</p><p class="card-body">Claude can personalize onboarding in real time. Every user takes a different path to their AHA moment — this is the new frontier of PLG, and I'm already building it.</p><span class="card-tag">AI + PLG</span></div>
+    </div>
+    <div style="text-align:center">
+      <button class="btn solid" onclick="go('contact')">LET'S BUILD YOUR LOOP ▶</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ BLOG ══════════ -->
+<div id="page-blog" class="page">
+  <div class="wrap">
+    <p class="sec-tag">THOUGHTS & IDEAS</p>
+    <h2 class="sec-h2">Writing on product,<br>leadership and <em>craft</em></h2>
+    <p style="font-size:16px;color:#BEB9FF !important;margin-bottom:1.75rem">Click any post to read the full article ▼</p>
+    <div class="blog-list">
+
+      <!-- POST 1 -->
+      <div class="bc">
+        <div class="bc-head" onclick="togglePost(this)">
+          <div>
+            <p class="bc-cat">LEADERSHIP · Jan 2021</p>
+            <p class="bc-title">THE THREE PILLARS OF EFFECTIVE LEADERSHIP</p>
+          </div>
+          <span class="bc-icon">▼</span>
+        </div>
+        <div class="bc-content">
+          <p>Leadership is one of the most challenging yet rewarding soft skills a person can develop. While understanding theory is valuable, real-world application is what truly refines our ability to lead. It requires a high level of introspection and emotional intelligence — being able to step back, recognize successes and failures, and continuously improve.</p>
+          <p>A strong leader knows when to lead, when to follow, and how to enhance problem-solving within a team. I define leadership through three key pillars:</p>
+          <h4>1. COMMUNICATE CLEARLY</h4>
+          <p>Effective communication is the foundation of strong leadership. It's about striking the right balance in clarity, frequency, and assertiveness. Agile offers structured approaches: daily stand-ups for progress, retrospectives for reflection, sprint reviews to align with stakeholders. Feedback mechanisms like 360° reviews and one-on-ones create valuable introspection opportunities.</p>
+          <p>One of my preferred leadership models is <strong style="color:#4FFFB0">Radical Candor</strong> — challenging directly (sharing honest feedback without arrogance) while caring personally (bringing humanity into professional interactions). Balancing both allows transparent discussions that tackle the elephant in the room without eroding morale.</p>
+          <h4>2. MOTIVATE THE TEAM</h4>
+          <blockquote>"If you want to go fast, go alone. If you want to go far, go together." — Cory Booker</blockquote>
+          <p>Great leadership fosters collaboration, trust, and accountability. Show genuine interest in team members' growth. Cultivate psychological safety where ideas and concerns can be shared openly. Direct competition toward external goals rather than internal conflicts. A leader's job is not to micromanage — it's to trust the team, guide them, and create space for growth.</p>
+          <h4>3. DELIVER RESULTS</h4>
+          <p>Leadership is ultimately about outcomes. Align on clear goals, adapt when plans change, maintain accountability without stifling creativity. Agile supports results-driven work through iteration and continuous improvement. The key is balancing structure with flexibility.</p>
+          <blockquote>"To improve is to change; to be perfect is to change often." — Winston Churchill</blockquote>
+          <span class="bc-tag">LEADERSHIP · TEAMS · COMMUNICATION · AGILE</span>
+        </div>
+      </div>
+
+      <!-- POST 2 -->
+      <div class="bc">
+        <div class="bc-head" onclick="togglePost(this)">
+          <div>
+            <p class="bc-cat">CREATIVITY · Jan 2021</p>
+            <p class="bc-title">ON FOSTERING CREATIVITY IN PRODUCT TEAMS</p>
+          </div>
+          <span class="bc-icon">▼</span>
+        </div>
+        <div class="bc-content">
+          <p>I believe creativity is one of the most valuable skills to cultivate — it integrates curiosity, flexibility, and design thinking to generate value from seemingly insignificant ideas. My studies in Canada reinforced that creativity is built on hard work, smart work, courage, and a bit of luck. It thrives in environments that encourage diversity, open communication, and a culture of empathy.</p>
+          <h4>BARRIERS TO CREATIVITY</h4>
+          <p>Creativity is hindered when there is only one "right" answer, when logic is overemphasized and dismisses unconventional solutions, or when rules are too rigid to allow exploration. A team that fosters creativity must embrace mistakes as an essential part of the iterative process.</p>
+          <h4>HOW TO CULTIVATE IT</h4>
+          <ul>
+            <li>Foster genuine interest in the problem at hand</li>
+            <li>Ensure creative contributions are valued by leadership</li>
+            <li>Maintain childlike curiosity — approach problems with fresh eyes</li>
+            <li>Produce many ideas and then filter them effectively (Gary Hamel)</li>
+          </ul>
+          <h4>SOFT SKILLS TO BUILD IN YOUR TEAM</h4>
+          <ul>
+            <li>Creative thinking and design reasoning</li>
+            <li>Clear communication and active listening</li>
+            <li>Decision-making and evaluation</li>
+            <li>Time management and prioritization</li>
+            <li>Negotiation and leadership under pressure</li>
+          </ul>
+          <p>Ultimately, a worthwhile goal is to create something truly original that endures. And that starts with making it safe to fail.</p>
+          <span class="bc-tag">CREATIVITY · DESIGN THINKING · TEAMS</span>
+        </div>
+      </div>
+
+      <!-- POST 3 -->
+      <div class="bc">
+        <div class="bc-head" onclick="togglePost(this)">
+          <div>
+            <p class="bc-cat">PRODUCT · Jan 2021</p>
+            <p class="bc-title">WHAT I LEARNED MANAGING PRODUCT ACROSS 4 INDUSTRIES</p>
+          </div>
+          <span class="bc-icon">▼</span>
+        </div>
+        <div class="bc-content">
+          <p>As a manager, your role extends beyond directing tasks — you are responsible for driving all aspects of team development. From fintech to telco to retail and education, the pattern is always the same: align on clear goals, adapt when plans change, and maintain accountability without stifling creativity.</p>
+          <h4>WHAT CHANGES ACROSS INDUSTRIES</h4>
+          <p>The domain changes. The vocabulary changes. The stakeholders change. The regulatory context changes. But the fundamentals don't: users have needs, businesses have goals, and your job is to find the overlap and ship toward it.</p>
+          <h4>WHAT NEVER CHANGES</h4>
+          <ul>
+            <li>Prioritization is always hard and always necessary</li>
+            <li>Stakeholder alignment takes more time than you budget for</li>
+            <li>The best discoveries come from talking to actual users</li>
+            <li>Agile is a culture first — the ceremonies come second</li>
+            <li>Roadmaps are living documents, not contracts</li>
+          </ul>
+          <h4>ON RESULTS</h4>
+          <p>Effective teams align on clear goals, adapt flexibly when plans change, and maintain accountability without stifling creativity. Agile supports results-driven work by emphasizing iteration and continuous improvement. The key: balance structure with flexibility — roadmap in place, but acknowledge that plans change.</p>
+          <span class="bc-tag">PRODUCT MANAGEMENT · AGILE · LEADERSHIP</span>
+        </div>
+      </div>
+
+      <!-- POST 4 -->
+      <div class="bc">
+        <div class="bc-head" onclick="togglePost(this)">
+          <div>
+            <p class="bc-cat">UX · Jan 2021</p>
+            <p class="bc-title">UX DESIGN PRINCIPLES I APPLY TO EVERY PRODUCT</p>
+          </div>
+          <span class="bc-icon">▼</span>
+        </div>
+        <div class="bc-content">
+          <p>As digital technology evolves, so do our expectations of digital interactions. UX design focuses on crafting the "feel" of a product — ensuring interactions are intuitive, seamless, and meaningful. A UX designer's primary goal is to create products that provide value to users while maximizing overall impact.</p>
+          <h4>WHAT MAKES A PRODUCT WORK</h4>
+          <ul>
+            <li><strong style="color:#4FFFB0">Useful</strong> — Simple, easy to use, designed with familiarity in mind</li>
+            <li><strong style="color:#4FFFB0">Usable</strong> — Addressing a real need in the user's life</li>
+            <li><strong style="color:#4FFFB0">Desirable</strong> — Visually appealing and capable of evoking positive emotions</li>
+          </ul>
+          <h4>HOW I APPLY THIS AS PM</h4>
+          <p>Every product decision I make runs through these three filters. A feature that's technically sound but not useful to the user is waste. A flow that's usable but not desirable will lose to a competitor that cares about craft. UX is not a phase — it's a continuous lens applied from discovery through delivery.</p>
+          <p>At Elektra we delivered 900+ wireframes and 500+ interface screens in 3 months — only because we had clear UX principles guiding prioritization at every sprint.</p>
+          <span class="bc-tag">UX DESIGN · PRODUCT · RESEARCH</span>
+        </div>
+      </div>
+
+      <!-- CTA card -->
+      <div class="bc" style="cursor:pointer" onclick="go('contact')">
+        <div class="bc-head" style="cursor:pointer">
+          <div>
+            <p class="bc-cat">WORK TOGETHER</p>
+            <p class="bc-title">GOT A PRODUCT CHALLENGE? LET'S TALK.</p>
+          </div>
+          <span style="font-size:18px;color:#FFD93D !important;padding-top:2px;flex-shrink:0">▶</span>
+        </div>
+        <div style="padding:0 1.25rem 1.25rem">
+          <p style="font-size:16px;color:#BEB9FF !important;margin-bottom:.75rem">Prioritization problem? PLG strategy? Want to discuss how Claude fits into your workflow? I'm always up for a good product conversation.</p>
+          <button class="btn solid" style="font-size:7px;padding:.5rem .9rem">GET IN TOUCH ▶</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CONTACT ══════════ -->
+<div id="page-contact" class="page">
+  <div class="wrap" style="max-width:660px">
+    <p class="sec-tag">PLAYER 2 HAS ENTERED THE GAME</p>
+    <h2 class="sec-h2">Let's build something<br><em>worth shipping</em></h2>
+    <div style="display:inline-flex;align-items:center;gap:5px;font-family:'Press Start 2P',monospace;font-size:6px;color:#4FFFB0 !important;border:1px solid #4FFFB0;padding:.3rem .6rem;margin-bottom:1.25rem"><span class="avail-dot"></span>AVAILABLE — reply within 48h</div>
+    <p class="body-text">Building a product? Need help with prioritization, PLG strategy, or integrating AI into your workflow? Let's talk.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:2rem">
+      <a href="mailto:fpabon456@gmail.com" class="cl"><span class="cl-icon">✉</span><div><span class="cl-lbl">EMAIL</span><span class="cl-val">fpabon456@gmail.com</span></div></a>
+      <a href="https://wa.me/573158327334" target="_blank" class="cl"><span class="cl-icon">📱</span><div><span class="cl-lbl">WHATSAPP</span><span class="cl-val">+57 315 832 7334</span></div></a>
+      <a href="https://www.linkedin.com/in/fernandopabon" target="_blank" class="cl"><span class="cl-icon">💼</span><div><span class="cl-lbl">LINKEDIN</span><span class="cl-val">in/fernandopabon</span></div></a>
+      <a href="https://abitof.me" target="_blank" class="cl"><span class="cl-icon">🌐</span><div><span class="cl-lbl">PORTFOLIO</span><span class="cl-val">abitof.me</span></div></a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:.85rem">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.75rem">
+        <div class="fl"><label>YOUR NAME</label><input class="cfi" placeholder="Name" id="fn"></div>
+        <div class="fl"><label>YOUR EMAIL</label><input type="email" class="cfi" placeholder="you@company.com" id="fe"></div>
+      </div>
+      <div class="fl"><label>WHAT ARE YOU BUILDING?</label>
+        <select class="cfi">
+          <option value="">Select...</option>
+          <option>Product strategy or roadmap help</option>
+          <option>Backlog prioritization</option>
+          <option>PLG strategy for my product</option>
+          <option>Integrate AI / Claude into my product</option>
+          <option>Hiring a senior PM</option>
+          <option>Activation / onboarding consult</option>
+          <option>Just want to chat product</option>
+        </select>
+      </div>
+      <div class="fl"><label>MESSAGE</label><textarea class="cfi" placeholder="Tell me about your product..." id="fm"></textarea></div>
+      <button class="btn solid" onclick="sendForm()" style="align-self:flex-start">SEND MESSAGE ▶</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function go(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('page-'+id).classList.add('active');
+  ['home','about','work','plg','blog','contact'].forEach(function(n){
+    var b=document.getElementById('n-'+n);
+    if(b) b.classList.toggle('active', n===id);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(id==='about'){
+    setTimeout(function(){
+      document.querySelectorAll('.sr-fill').forEach(function(el){
+        el.style.width = el.getAttribute('data-w');
+      });
+    },200);
+  }
+}
+
+function togglePost(header){
+  var card = header.parentElement;
+  var content = card.querySelector('.bc-content');
+  var icon = header.querySelector('.bc-icon');
+  var isOpen = card.classList.contains('open');
+  card.classList.toggle('open', !isOpen);
+  content.style.display = isOpen ? 'none' : 'block';
+  icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+}
+
+function sendForm(){
+  var n=document.getElementById('fn').value.trim();
+  var e=document.getElementById('fe').value.trim();
+  var m=document.getElementById('fm').value.trim();
+  if(!n||!e||!m){alert('Please fill in all fields.');return;}
+  window.location.href='mailto:fpabon456@gmail.com?subject=Inquiry from '+encodeURIComponent(n)+'&body='+encodeURIComponent(m)+'%0A%0AFrom: '+e;
+}
+
+/* PIXEL AVATAR — pure DOM divs */
+(function(){
+  var P={_:'transparent',O:'#2A1A5E',S:'#D4956A',H:'#1E0E05',E:'#0D0B1F',A:'#6B66FF',G:'#4FFFB0',B:'#F0A080'};
+  var rows=[
+    '_  _  _  _  O  O  O  O  O  _  _  _  _  _',
+    '_  _  _  O  O  H  H  O  O  O  _  _  _  _',
+    '_  _  O  H  H  H  H  H  H  H  O  _  _  _',
+    '_  O  H  H  H  H  H  H  H  H  H  O  _  _',
+    '_  O  S  E  S  S  S  S  E  S  S  O  _  _',
+    '_  O  S  S  S  S  S  S  S  S  S  O  _  _',
+    '_  O  S  B  S  S  S  S  S  B  S  O  _  _',
+    '_  O  S  S  O  S  S  S  O  S  S  O  _  _',
+    '_  _  O  S  S  S  S  S  S  S  O  _  _  _',
+    '_  O  G  G  A  A  A  A  A  A  G  G  O  _',
+    'O  O  A  A  A  A  A  A  A  A  A  A  O  O',
+    'O  A  A  A  A  A  A  A  A  A  A  A  A  O',
+    'O  A  A  A  A  A  A  A  A  A  A  A  A  O',
+    '_  O  O  A  A  A  A  A  A  A  O  O  _  _',
+    '_  _  O  O  O  _  _  _  O  O  O  _  _  _'
+  ];
+  var wrap=document.getElementById('px-av');
+  if(!wrap) return;
+  var S=11;
+  rows.forEach(function(row){
+    var cells=row.trim().split(/\s+/);
+    var div=document.createElement('div');
+    div.style.cssText='display:flex;line-height:0';
+    cells.forEach(function(k){
+      var c=document.createElement('div');
+      c.style.cssText='width:'+S+'px;height:'+S+'px;background:'+(P[k]||'transparent')+';flex-shrink:0';
+      div.appendChild(c);
+    });
+    wrap.appendChild(div);
+  });
+})();
+</script>
+</html>
